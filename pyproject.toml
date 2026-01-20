@@ -1,0 +1,7 @@
+[project]
+name = "playerxtl-tui"
+version = "0.1.0"
+dependencies = ["textual>=0.90.0"]
+
+[project.optional-dependencies]
+dev = ["textual-dev>=1.6.0", "watchfiles>=0.20.0", "pytest>=7.0.0"]

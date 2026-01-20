@@ -1,0 +1,28 @@
+Screen {
+    align: center middle;
+}
+
+Container {
+    width: 60;
+    height: auto;
+    border: solid $primary;
+    background: $surface;
+    padding: 2;
+}
+
+Button {
+    margin: 1;
+}
+
+#contador {
+    text-align: center;
+    margin: 1;
+    color: $accent;
+}
+
+Label {
+    text-align: center;
+    margin: 1;
+    color: $accent;
+}
+
