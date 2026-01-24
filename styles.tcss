@@ -1,28 +1,63 @@
 Screen {
-    align: center middle;
+  align: center middle;
+  hatch: cross $primary 10%;
+  background: $surface 50%; 
 }
 
-Container {
-    width: 60;
-    height: auto;
-    border: solid $primary;
-    background: $surface;
-    padding: 2;
+#main-layout {
+  width: 55%;
+  height: 50%;
+  border: tall $primary;
+  padding: 0 2 0 2;
+  
+  background-tint: $primary 5%;
 }
 
-Button {
-    margin: 1;
+#left-panel {
+  width: 1fr;
 }
 
-#contador {
-    text-align: center;
-    margin: 1;
-    color: $accent;
+.player_list {
+  height: 99%;
+  border: solid $primary;
 }
 
-Label {
-    text-align: center;
-    margin: 1;
-    color: $accent;
+PlayerList ListView {
+  width: 100%;
+  height: auto;
 }
 
+PlayerList ListItem {
+}
+
+PlayerList Label {              
+  padding: 1 2;
+  text-style: bold;
+  width: 100%;
+  content-align: center middle;
+}
+
+#right-panel {
+  width: 2fr;
+}
+
+.player_info {
+  height: auto;
+  border: solid $primary;
+}
+
+.controls {
+  border: solid $primary;
+  height: 99%;
+  layout: grid;
+  grid-size: 9;
+}
+
+.controls #controls-layout {
+  /*size: 2fr;*/
+}
+
+.controls .box {
+  height: 100%;
+  border: solid $primary;
+}
