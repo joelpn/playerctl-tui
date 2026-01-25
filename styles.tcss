@@ -14,12 +14,12 @@ Screen {
 }
 
 #left-panel {
-  width: 1fr;
+  width: 0.8fr;
 }
 
 .player_list {
-  height: 99%;
-  border: solid $primary;
+  height: 1fr;
+  border: round $primary;
 }
 
 PlayerList ListView {
@@ -42,22 +42,54 @@ PlayerList Label {
 }
 
 .player_info {
-  height: auto;
-  border: solid $primary;
+  height: 1.2fr;
+  border: round $primary;
 }
 
 .controls {
-  border: solid $primary;
-  height: 99%;
-  layout: grid;
-  grid-size: 9;
+  height: 0.35fr;
+  border: round $primary;
+  align: center middle;
 }
 
-.controls #controls-layout {
-  /*size: 2fr;*/
+.controls-wrapper {
+  height: auto;
+  width: 100%;
+  align: center middle;
 }
 
-.controls .box {
-  height: 100%;
-  border: solid $primary;
+.control-group {
+  width: 1fr; /* Los laterales ocupan 1 parte cada uno */
+  height: auto;
+  align: center middle;
+}
+
+#transport-main {
+  width: 1.5fr; /* El centro ocupa el doble de espacio */
+}
+
+/* Alineamos el contenido de los grupos laterales */
+#playback-options {
+  content-align: left middle;
+  padding-left: 1;
+}
+
+#volume-controls {
+  content-align: right middle;
+  padding-right: 1;
+}
+
+.btn-main {
+  min-width: 8;
+  background: $accent;
+  color: $text;
+  text-style: bold;
+  border: tall $primary;
+  margin: 0 1;
+}
+
+.btn-small {
+  min-width: 5;
+  border: round gray;
+  margin: 0 1;
 }

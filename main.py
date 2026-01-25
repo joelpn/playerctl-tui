@@ -25,10 +25,8 @@ class MainApp(App):
         yield Header()
         with Horizontal(id="main-layout"):
             with Vertical(id="left-panel"):
-                yield Static("Players", classes="panel-header")
                 yield PlayerList(player=self.player, classes="player_list")
             with Vertical(id="right-panel"):
-                yield Static("Player Info", classes="panel-header")
                 yield PlayerInfo(classes="player_info")
                 yield Controls(classes="controls")
         #yield Footer()

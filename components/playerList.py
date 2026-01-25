@@ -4,6 +4,7 @@ import re
 from playerctlWrapper import PlayerctlWrapper
 
 class PlayerList(Static):
+    BORDER_TITLE = "Players"
     CSS_PATH = "playerList.tcss"
 
     def __init__(self, player: PlayerctlWrapper, **kwargs):
