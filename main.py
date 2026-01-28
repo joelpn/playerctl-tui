@@ -5,7 +5,7 @@ from textual.reactive import reactive
 from textual.widgets import RichLog
 
 from playerctlWrapper import PlayerctlWrapper
-from components import PlayerList, PlayerInfo, Controls
+from components import PlayerList, PlayerInfo, PlayerControls
 
 class MainApp(App):
     CSS_PATH = "styles.tcss"
@@ -13,9 +13,6 @@ class MainApp(App):
     ENABLE_COMMAND_PALETTE = False
     BINDINGS = [("space", "toggle_play", "Play/Pause"), ("n", "next", "Siguiente")]
     
-    # init=False evita que falle al arrancar la app
-    count = reactive(0, init=False)
-
     def __init__(self) -> None:
         super().__init__()
         self.player = PlayerctlWrapper()
@@ -27,16 +24,9 @@ class MainApp(App):
             with Vertical(id="left-panel"):
                 yield PlayerList(player=self.player, classes="player_list")
             with Vertical(id="right-panel"):
-                yield PlayerInfo(classes="player_info")
-                yield Controls(classes="controls")
+                yield PlayerInfo(player=self.player, classes="player_info")
+                yield PlayerControls(player=self.player, classes="controls")
         #yield Footer()
-
-    def on_mount(self) -> None:
-        self.log_players()
-
-    def log_players(self) -> None:
-        players = self.player.list_players()
-        self.log(f"Available players: {', '.join(players) if players else 'None'}")
 
 if __name__ == "__main__":
     MainApp().run()

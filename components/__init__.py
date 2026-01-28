@@ -1,5 +1,5 @@
 from .playerList import PlayerList
 from .playerInfo import PlayerInfo
-from .controls import Controls
+from .playerControls import PlayerControls
 
-__all__ = ["PlayerList", "PlayerInfo", "Controls"]
+__all__ = ["PlayerList", "PlayerInfo", "PlayerControls"]

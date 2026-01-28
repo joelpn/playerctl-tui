@@ -5,7 +5,6 @@ from playerctlWrapper import PlayerctlWrapper
 
 class PlayerList(Static):
     BORDER_TITLE = "Players"
-    CSS_PATH = "playerList.tcss"
 
     def __init__(self, player: PlayerctlWrapper, **kwargs):
         super().__init__(**kwargs)
@@ -20,59 +19,40 @@ class PlayerList(Static):
 
     def refresh_players(self) -> None:
         raw_players = self.player.list_players()
-        clean_players = [re.sub(r"\..*", "", p) for p in raw_players]
-        unique_players = list(set(clean_players))
 
-        self.update_players(unique_players)
+        player_data = []
+        for p in raw_players:
+            player_data.append({
+                "real_id": p,
+                "clean_name": re.sub(r"\..*", "", p).capitalize()
+            })
+        
+        self.update_players(player_data)
 
-    def update_players(self, players: list[str]) -> None:
+    def update_players(self, player_data: list[dict]) -> None:
         list_view = self.query_one("#list-view-players", ListView)
         
-        current_players = []
-        for item in list_view.children:
-            name = getattr(item, "player_name", None)
-            if name:
-                current_players.append(name)
+        new_ids = [p["real_id"] for p in player_data]
+        current_ids = [getattr(item, "player_id", "") for item in list_view.children]
         
-        if set(current_players) != set(players):
+        if set(current_ids) != set(new_ids):
             highlighted_idx = list_view.index
             list_view.clear()
             
-            if not players:
-                item = ListItem(Label("No hay reproductores"))
-                item.player_name = None
+            if not player_data:
+                item = ListItem(Label("󰝛 No hay reproductores"))
+                item.player_id = None
                 list_view.append(item)
             else:
-                for i, p in enumerate(players):
-                    label_text = f"󰎆 {p}"
-                    if i == highlighted_idx:
-                        label_text = f"> {p} <"
-                    
-                    item = ListItem(Label(label_text))
-                    item.player_name = p
+                for p in player_data:
+                    item = ListItem(Label(f"󰎆 {p['clean_name']}"))
+                    item.player_id = p["real_id"]   # ID sucio (instancia)
+                    item.player_name = p["clean_name"] # Nombre bonito
                     list_view.append(item)
             
-            if highlighted_idx is not None and highlighted_idx < len(players):
+            if highlighted_idx is not None and highlighted_idx < len(player_data):
                 list_view.index = highlighted_idx
 
-    def on_list_view_highlighted_changed(self, event: ListView.HighlightedChanged) -> None:
-        """Adds markers to the currently highlighted item."""
-        list_view = self.query_one("#list-view-players", ListView)
-        for i, item in enumerate(list_view.children):
-            label = item.query_one(Label)
-            name = getattr(item, "player_name", None)
-            if not name:
-                continue
-                
-            if i == event.index:
-                label.update(f"> {name} <")
-            else:
-                label.update(f"󰎆 {name}")
-    
     def on_list_view_selected(self, event: ListView.Selected) -> None:
-        """Evento que se dispara al seleccionar un reproductor."""
-        player_name = getattr(event.item, "player_name", None)
-        if player_name:
-            self.app.notify(f"Seleccionado: {player_name}")
-        else:
-            self.app.notify("Ningún reproductor seleccionado")
+        player_name = getattr(event.item, "player_id", None)
+        self.app.active_player = player_name
