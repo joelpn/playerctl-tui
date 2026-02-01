@@ -94,11 +94,13 @@ PlayerList Label {
 .progress-wrapper {
   height: auto;
   margin-top: 1;
+  width: 100%;
 }
 
 .time-labels {
   height: 1;
   margin-bottom: 0;
+  width: 100%;
 }
 
 #time-current, #time-total {
@@ -113,6 +115,11 @@ PlayerList Label {
 .info-progress-bar {
   width: 100%;
   height: 1;
+}
+
+/* Estilar el componente interno de la barra de progreso */
+#info-progress > #bar {
+  width: 100%;
 }
 
 

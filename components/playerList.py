@@ -4,7 +4,7 @@ import re
 from playerctlWrapper import PlayerctlWrapper
 
 class PlayerList(Static):
-    BORDER_TITLE = "Players"
+    # BORDER_TITLE = "Players"
 
     def __init__(self, player: PlayerctlWrapper, **kwargs):
         super().__init__(**kwargs)

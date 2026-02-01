@@ -17,7 +17,7 @@ class PlayerControls(Static):
         "volume_down": "󰕿", # \U000f057d
         "mute": "󰝟"         # \U000f075f
     }
-    BORDER_TITLE = "Controls"
+    # BORDER_TITLE = "Controls"
 
     def __init__(self, player: PlayerctlWrapper, **kwargs):
         super().__init__(**kwargs)

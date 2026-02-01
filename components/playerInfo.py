@@ -6,7 +6,7 @@ from textual.color import Gradient
 
 class PlayerInfo(Static):
     """Widget que muestra la información del reproductor activo con un diseño mejorado."""
-    BORDER_TITLE = "Player Info"
+    # BORDER_TITLE = "Player Info"
 
     def __init__(self, player: PlayerctlWrapper, **kwargs):
         super().__init__(**kwargs)
@@ -20,11 +20,9 @@ class PlayerInfo(Static):
         )
 
         with Container(classes="info-container"):
-            # Estado vacío
             with Center(id="info-empty-state"):
                 yield Label("Seleccione un reproductor...", id="info-status-label")
             
-            # Contenido principal
             with Vertical(id="info-content"):
                 # with Center():
                 #     yield Label(" NOW PLAYING", id="info-header")
@@ -35,11 +33,6 @@ class PlayerInfo(Static):
                     yield Label("", id="info-album", classes="album-label")
                 
                 with Vertical(classes="progress-wrapper"):
-                    with Horizontal(classes="time-labels"):
-                        yield Label("0:00", id="time-current")
-                        yield Static("", classes="flex-spacer")
-                        yield Label("0:00", id="time-total")
-                    
                     yield ProgressBar(
                         show_percentage=False, 
                         show_eta=False, 
@@ -47,6 +40,11 @@ class PlayerInfo(Static):
                         classes="info-progress-bar",
                         gradient=gradient
                     )
+                    with Horizontal(classes="time-labels"):
+                        yield Label("0:00", id="time-current")
+                        yield Static("", classes="flex-spacer")
+                        yield Label("0:00", id="time-total")
+                    
 
     def on_mount(self) -> None:
         self.query_one("#info-content").display = False
@@ -87,6 +85,10 @@ class PlayerInfo(Static):
         else:
             self.query_one("#info-album").update("")
 
+        # Manejar posición None o inválida
+        if position is None:
+            position = 0
+
         # Actualizar tiempos
         self.query_one("#time-current").update(self.format_time(int(position)))
         self.query_one("#time-total").update(self.format_time(length))
@@ -94,8 +96,8 @@ class PlayerInfo(Static):
         # Actualizar barra de progreso
         progress_bar = self.query_one("#info-progress", ProgressBar)
         if length > 0:
-            progress_bar.total = length
-            progress_bar.update(progress=position)
+            progress_bar.total = float(length)
+            progress_bar.update(progress=float(position))
             progress_bar.display = True
         else:
             progress_bar.display = False
